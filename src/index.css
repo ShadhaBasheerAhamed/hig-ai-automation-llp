@@ -1,0 +1,87 @@
+/* src/index.css */
+
+/* --- 1. Tailwind CSS setup --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- 2. Body Background Styles (Preserved) --- */
+html:not(.dark) body {
+  background-color: #e0f2fe; /* Fallback color */
+  background-image: linear-gradient(to bottom right, #e0e7ff, #e0f2fe);
+}
+html.dark body {
+  background-color: #0f172a; /* tailwind's slate-900 */
+}
+
+/* --- 3. Custom Component Styles --- */
+@layer components {
+  /* Button style (Preserved) */
+  .btn {
+    @apply px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition;
+  }
+
+  /* DESKTOP Magic Indicator for Navbar (Preserved) */
+  .magic-indicator {
+    @apply absolute bottom-0 left-0 right-0 h-[3px] bg-indigo-500 dark:bg-indigo-400 rounded-full z-0;
+  }
+
+  /* ✨ UPDATED: Testimonial Scrolling Wrapper with Fading Edges */
+  .scrolling-wrapper {
+    @apply flex overflow-hidden;
+
+    /* This creates the elegant fade-out effect on the edges */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  /* ✨ UPDATED: Testimonial Scrolling Content */
+  .scrolling-content {
+    @apply flex flex-nowrap;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 90s; /* Slower, more professional speed */
+
+    /* Pause animation on hover */
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Animation direction classes (Unchanged) */
+  .right-to-left {
+    animation-name: scroll-rtl;
+  }
+
+  .left-to-right {
+    animation-name: scroll-ltr;
+  }
+}
+
+/* --- 4. Keyframe Animations (Unchanged) --- */
+/* These keyframes are correct for content duplicated 3 times */
+@keyframes scroll-rtl {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes scroll-ltr {
+  from {
+    transform: translateX(-33.333%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* --- 5. Responsive Adjustments --- */
+/* ✨ UPDATED: Adjusted for the new base animation speed */
+@media (max-width: 768px) {
+  .scrolling-content {
+    animation-duration: 60s; /* Faster scroll on smaller screens */
+  }
+}
