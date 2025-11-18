@@ -117,7 +117,7 @@ const Footer = () => {
                   href="tel:+916381555777" 
                   className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300"
                 >
-                    <FaPhoneAlt/> +91 6381 555 777
+                    <FaPhoneAlt/> +91 638 172 6852
                 </a>
                 
                 <div className="flex space-x-4 pt-2">
