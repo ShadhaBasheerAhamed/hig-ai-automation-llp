@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from './firebaseConfig'; // Adjust the path if necessary
+import { db } from './firebaseConfig'; 
 import { motion, AnimatePresence } from 'framer-motion';
+import { HelmetProvider } from 'react-helmet-async';
+import SEO from './SEO'; 
 
 // --- Reusable Icon Components ---
 const BackIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>;
@@ -119,21 +121,30 @@ const LeaveReview = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center p-4 transition-colors">
-            <header className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center">
-             
-                {step > 1 && step !== 5 && step !== 11 && (
-                    <button onClick={prevStep} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
-                        <BackIcon />
-                    </button>
-                )}
-            </header>
-            <main className="w-full max-w-lg">
-                <AnimatePresence mode="wait">
-                    {renderStep()}
-                </AnimatePresence>
-            </main>
-        </div>
+        <HelmetProvider>
+            {/* 🚀 SEO Integration: Feedback & Review Keywords */}
+            <SEO 
+                title="Leave a Review - HIG AI Automation"
+                description="Share your experience with HIG AI Automation. We value customer feedback to improve our AI, Web Development, and Automation services."
+                keywords="Leave a Review HIG AI, Customer Feedback, Client Testimonials, Rate HIG AI Automation, Business Automation Reviews, Web Development Feedback Tirunelveli, Customer Satisfaction Survey, HIG AI Ratings, Client Success Stories, Improve AI Services"
+            />
+
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center p-4 transition-colors">
+                <header className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center">
+                 
+                    {step > 1 && step !== 5 && step !== 11 && (
+                        <button onClick={prevStep} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <BackIcon />
+                        </button>
+                    )}
+                </header>
+                <main className="w-full max-w-lg">
+                    <AnimatePresence mode="wait">
+                        {renderStep()}
+                    </AnimatePresence>
+                </main>
+            </div>
+        </HelmetProvider>
     );
 };
 
@@ -154,7 +165,6 @@ const StarRatingStep = ({ onSelectRating, rating }) => {
                     </button>
                 ))}
             </div>
-            {/* The button is not strictly necessary as clicking a star proceeds, but can be added if desired */}
         </div>
     );
 };

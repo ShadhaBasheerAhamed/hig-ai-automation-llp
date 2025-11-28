@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Lottie from 'react-lottie-player';
+import Lottie from 'lottie-react'; // ✅ Switched to lottie-react
 
 const HeroSection = ({ onExploreClick }) => {
     const [animationData, setAnimationData] = useState(null);
@@ -31,9 +31,8 @@ const HeroSection = ({ onExploreClick }) => {
               {/* Only render the animation player after the JSON file has loaded */}
               {animationData && (
                 <Lottie
-                    loop
+                    loop={true} // ✅ Syntax for lottie-react
                     animationData={animationData}
-                    play
                     style={{ width: '100%', height: '100%' }}
                 />
               )}
@@ -58,13 +57,11 @@ const HeroSection = ({ onExploreClick }) => {
 
                         <motion.div variants={itemVariants}>
                             <button
-    onClick={onExploreClick}
-    className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 shadow-lg shadow-indigo-500/30"
->
-    Explore Our Solutions
-</button>
-
-
+                                onClick={onExploreClick}
+                                className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 shadow-lg shadow-indigo-500/30"
+                            >
+                                Explore Our Solutions
+                            </button>
                         </motion.div>
                     </motion.div>
 
@@ -75,4 +72,3 @@ const HeroSection = ({ onExploreClick }) => {
 };
 
 export default HeroSection;
-

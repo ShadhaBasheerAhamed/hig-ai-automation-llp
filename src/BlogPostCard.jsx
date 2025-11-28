@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
 
 // Object to map categories to specific colors for their tags
 // UPDATED: Now using lighter backgrounds with darker text for better theme compatibility
@@ -14,9 +14,12 @@ const categoryColors = {
 const BlogPostCard = ({ post }) => {
   return (
     // The main card container with styling and hover effects
-    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/20">
+    <motion.div 
+      className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/20"
+      whileHover={{ y: -5 }}
+    >
       {/* Blog post image */}
-      <img src={post.imageUrl} alt={post.title} className="w-full h-48 object-cover" />
+      <img src={post.imageUrl || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-48 object-cover" />
       
       {/* Card content */}
       <div className="p-6">
@@ -33,18 +36,21 @@ const BlogPostCard = ({ post }) => {
         </h3>
 
         {/* UPDATED: Description now switches color based on theme */}
-        <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">{post.description}</p>
+        <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3">{post.description}</p>
         
         {/* UPDATED: Author/Date now switches color based on theme */}
-        <div className="flex items-center text-xs text-slate-500 dark:text-slate-500">
-          <span>By {post.author}</span>
-          <span className="mx-2">•</span>
-          <span>{post.date}</span>
+        <div className="flex items-center text-xs text-slate-500 dark:text-slate-500 justify-between mt-auto">
+          <div className="flex items-center">
+            <span>By {post.author || 'HIG Team'}</span>
+            <span className="mx-2">•</span>
+            <span>{post.date}</span>
+          </div>
+          <button className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-medium">Read More →</button>
         </div>
         
         {/* ▲▲▲ END OF TEXT COLOR FIXES ▲▲▲ */}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

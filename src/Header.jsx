@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MobileNavSidebar from './MobileNavSidebar';
+import { HelmetProvider } from 'react-helmet-async'; // 1. Provider Import
+import SEO from './SEO'; // 2. SEO Import
 
 // --- Reusable Icon and Toggle Button Components ---
 const ThemeToggleButton = ({ theme, setTheme }) => (
@@ -70,7 +72,12 @@ const Header = ({ theme, setTheme }) => {
     }, [menuOpen]);
 
     return (
-        <>
+        <HelmetProvider>
+            {/* 🚀 SEO Integration: Global Keywords for the entire site */}
+            <SEO 
+                keywords="ai solutions, intelligent ai systems, ai agents platform, llm training, rag ai development, vector database solutions, hyperautomation, ai + rpa automation, erp billing software, crm ai integration, pwa development, ai mobile apps, automated lead capture, sales funnel automation, whatsapp api services, cloud deployment india, aws deployment services, ai company tirunelveli, software startup tamilnadu, digital transformation india, industry 4.0 automation, smart business workflows, Ai agents fine tuning, Website development, Mobile app development, Software developement, Buisness workflow automation (rpa), Billing & ERP application development, Lead generation, Digital marketing, All third party services"
+            />
+
             <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || menuOpen ? 'bg-white/70 dark:bg-slate-900/70 backdrop-blur-lg' : ''}`}>
                 <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                     
@@ -130,9 +137,8 @@ const Header = ({ theme, setTheme }) => {
                 handleNavClick={handleNavClick}
                 theme={theme} 
             />
-        </>
+        </HelmetProvider>
     );
 };
 
 export default Header;
-

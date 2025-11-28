@@ -1,10 +1,10 @@
-// src/ServicesPage.jsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Lottie from 'react-lottie-player'; // --- NEW: Import Lottie player ---
+import Lottie from 'lottie-react'; // ✅ Switched to lottie-react for stability
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from './firebaseConfig';
+import { HelmetProvider } from 'react-helmet-async'; // 1. Provider Import
+import SEO from './SEO'; // 2. SEO Import
 
 const AnimatedSection = ({ children, className, id }) => {
     const ref = useRef(null);
@@ -58,11 +58,10 @@ const ServiceCard = ({ iconUrl, title, description }) => (
 const ServicesPage = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [animationData, setAnimationData] = useState(null); // --- NEW: State for animation data ---
+    const [animationData, setAnimationData] = useState(null);
 
-    // --- NEW: useEffect to load the Lottie animation ---
+    // useEffect to load the Lottie animation
     useEffect(() => {
-        // Make sure your animation JSON file is in the public/animations/ folder
         fetch('/images/pjELxpvEGy.json') 
             .then((response) => response.json())
             .then((data) => setAnimationData(data))
@@ -92,41 +91,52 @@ const ServicesPage = () => {
     };
 
     return (
-        <AnimatedSection id="services" className="py-32 container mx-auto px-6">
-            {/* --- NEW: Lottie Animation Display --- */}
-            <motion.div
-                className="max-w-xs mx-auto mb-8"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-            >
-                {animationData && ( <Lottie loop animationData={animationData} play /> )}
-            </motion.div>
-            
-            <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Our Services</h2>
-                <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto">
-                    From custom AI solutions to robust web platforms, we provide the tools you need to innovate and grow.
-                </p>
-            </div>
-            
-            {loading ? (
-                <p className="text-center text-slate-700 dark:text-white">Loading services...</p>
-            ) : (
-                <motion.div 
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
+        <HelmetProvider>
+            {/* 🚀 SEO Integration: Detailed Service Keywords */}
+            <SEO 
+                title="Our Services - AI, RPA, Web & App Development | HIG AI"
+                description="Explore HIG AI Automation's premium services: Custom AI Solutions, Intelligent Agents, RPA Workflow Automation, ERP Billing Software, and Mobile App Development in Tirunelveli."
+                keywords="ai solutions, intelligent ai systems, ai agents platform, llm training, rag ai development, vector database solutions, hyperautomation, ai + rpa automation, erp billing software, crm ai integration, pwa development, ai mobile apps, automated lead capture, sales funnel automation, whatsapp api services, cloud deployment india, aws deployment services, ai company tirunelveli, software startup tamilnadu, digital transformation india, industry 4.0 automation, smart business workflows, Ai agents fine tuning, Website development, Mobile app development, Software developement, Buisness workflow automation (rpa), Billing & ERP application development, Lead generation, Digital marketing, All third party services"
+            />
+
+            <AnimatedSection id="services" className="py-32 container mx-auto px-6">
+                
+                {/* Lottie Animation Display */}
+                <motion.div
+                    className="max-w-xs mx-auto mb-8"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
                 >
-                    {services.length > 0 ? (
-                        services.map(service => <ServiceCard key={service.id} {...service} />)
-                    ) : (
-                        <p className="col-span-full text-center text-slate-500 dark:text-slate-400">No services have been added yet.</p>
-                    )}
+                    {/* Updated for lottie-react */}
+                    {animationData && ( <Lottie loop={true} animationData={animationData} /> )}
                 </motion.div>
-            )}
-        </AnimatedSection>
+                
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Our Services</h2>
+                    <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto">
+                        From custom AI solutions to robust web platforms, we provide the tools you need to innovate and grow.
+                    </p>
+                </div>
+                
+                {loading ? (
+                    <p className="text-center text-slate-700 dark:text-white">Loading services...</p>
+                ) : (
+                    <motion.div 
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        {services.length > 0 ? (
+                            services.map(service => <ServiceCard key={service.id} {...service} />)
+                        ) : (
+                            <p className="col-span-full text-center text-slate-500 dark:text-slate-400">No services have been added yet.</p>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatedSection>
+        </HelmetProvider>
     );
 };
 

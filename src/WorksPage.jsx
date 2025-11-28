@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
-import Lottie from 'react-lottie-player';
+import { motion, useInView, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
+import Lottie from 'lottie-react'; // ✅ Switched to lottie-react for stability
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import WorkDetailModal from './WorkDetailModal';
+import { HelmetProvider } from 'react-helmet-async'; // 1. Provider Import
+import SEO from './SEO'; // 2. SEO Import
 
-
-// Helper component for section animations (No changes)
+// Helper component for section animations
 const AnimatedSection = ({ children }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.1 });
@@ -23,7 +24,7 @@ const AnimatedSection = ({ children }) => {
     );
 };
 
-// --- Animated Number Component (No changes) ---
+// --- Animated Number Component ---
 const AnimatedNumber = ({ value }) => {
     const count = useMotionValue(0);
     const rounded = useTransform(count, (latest) => `${Math.round(latest)}+`);
@@ -43,8 +44,7 @@ const AnimatedNumber = ({ value }) => {
     return <motion.h3 ref={ref}>{rounded}</motion.h3>;
 };
 
-
-// --- Stat Card Component (No changes) ---
+// --- Stat Card Component ---
 const StatCard = ({ value, label, icon }) => (
     <motion.div
         className="relative p-8 rounded-2xl overflow-hidden text-center flex flex-col items-center justify-center
@@ -70,8 +70,8 @@ const StatCard = ({ value, label, icon }) => (
 const StatsSection = () => {
     const stats = [
         { value: 50, label: "Global Clients", icon: <UserGroupIcon /> },
-        // ✨ UPDATED LINE: Replaced GlobeAltIcon with the new ComputerDesktopIcon
         { value: 150, label: "Websites Launched", icon: <ComputerDesktopIcon /> },
+        { value: 100, label: "Digital Marketing", icon: <ChartBarIcon /> }, 
         { value: 250, label: "Happy Customers", icon: <HeartIcon /> }
     ];
 
@@ -87,7 +87,7 @@ const StatsSection = () => {
         <AnimatedSection>
             <div className="py-24 container mx-auto px-6">
                 <motion.div
-                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -101,7 +101,7 @@ const StatsSection = () => {
     );
 };
 
-// (WorkCard component remains unchanged)
+// --- Work Card Component ---
 const WorkCard = ({ work, onSelect }) => (
     <motion.div
         onClick={() => onSelect(work)}
@@ -158,7 +158,14 @@ const WorksPage = () => {
     };
 
     return (
-        <>
+        <HelmetProvider>
+            {/* 🚀 SEO Integration: Portfolio & Works Keywords */}
+            <SEO 
+                title="Our Work - AI Automation & Web Development Portfolio | HIG AI"
+                description="Explore HIG AI Automation's portfolio of successful projects: Custom AI Agents, RPA Implementations, ERP Systems, and High-Performance Web Applications."
+                keywords="HIG AI Portfolio, AI Success Stories, Web Development Projects Tirunelveli, RPA Case Studies, Client Results HIG AI, Digital Transformation Examples, Custom ERP Projects, E-commerce Success, Fintech App Development, Healthcare AI Solutions, Construction Software Projects, Automated Workflows Portfolio, Business Process Automation Examples, AI Agents in Action"
+            />
+
             <AnimatedSection>
                 <div className="container mx-auto px-6 py-24 text-center">
                     <motion.div
@@ -167,7 +174,8 @@ const WorksPage = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        {animationData && ( <Lottie loop animationData={animationData} play /> )}
+                        {/* Updated for lottie-react compatibility */}
+                        {animationData && ( <Lottie loop={true} animationData={animationData} /> )}
                     </motion.div>
                     
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
@@ -192,7 +200,7 @@ const WorksPage = () => {
             <StatsSection />
             
             {selectedWork && <WorkDetailModal work={selectedWork} onClose={handleCloseModal} />}
-        </>
+        </HelmetProvider>
     );
 };
 
@@ -204,14 +212,18 @@ const UserGroupIcon = () => (
     </svg>
 );
 
-// ✨ NEW ICON: A clean, professional computer monitor icon.
 const ComputerDesktopIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" />
     </svg>
 );
 
-// ✨ GlobeAltIcon has been removed as it's no longer used.
+// ✨ NEW ICON: ChartBarIcon for Digital Marketing
+const ChartBarIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+    </svg>
+);
 
 const HeartIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie-player';
-
 import { motion } from 'framer-motion';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
+import SEO from './SEO'; // ✅ FIXED: Now correctly imports the SEO component
 
 const AboutUsPage = () => {
   const [animationData, setAnimationData] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(true);
 
   // Fetch the Lottie animation data 
   useEffect(() => {
@@ -58,13 +57,13 @@ const AboutUsPage = () => {
   return (
     <HelmetProvider>
       <div className="bg-gray-50 dark:bg-[#0F172A] transition-colors duration-500 overflow-x-hidden">
-        <Helmet>
-          <title>About HIG AI Automation | Our Mission, Vision, and Story</title>
-          <meta 
-            name="description" 
-            content="Learn about HIG AI Automation, a leading provider of AI-driven solutions. Discover our mission to empower businesses through intelligent automation and our vision for the future." 
-          />
-        </Helmet>
+        
+        {/* 🚀 SEO Component Integrated with HIGH RANKING Keywords */}
+        <SEO 
+          title="About Us - Revolutionizing Business with AI"
+          description="HIG AI Automation in Tirunelveli empowers businesses with custom AI agents, RPA automation, and web development. Read our story of innovation and ethical technology."
+          keywords="HIG AI Automation journey, startup story tirunelveli, AI mission and vision, automation company values, innovation in tamilnadu, ethical AI development, business transformation story, tech foundation, HIG team, software company background, intelligent process automation, sustainable technology growth, artificial intelligence experts india, digital transformation leaders"
+        />
 
         <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
           
@@ -106,7 +105,7 @@ const AboutUsPage = () => {
                 <Lottie 
                   animationData={animationData} 
                   loop={true} 
-                  play={isPlaying}
+                  // Removed 'play' prop as it's not needed for lottie-react defaults
                   className="w-full max-w-sm" 
                 />
               ) : (
@@ -156,4 +155,3 @@ const AboutUsPage = () => {
 };
 
 export default AboutUsPage;
-

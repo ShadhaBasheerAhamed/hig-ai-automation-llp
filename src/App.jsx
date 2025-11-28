@@ -52,7 +52,7 @@ const App = () => {
       // This ensures the Robot animation is seen before the site snaps in.
       setTimeout(() => {
         setIsLoading(false);
-      }, 10000); 
+      }, 5000); 
     };
 
     // Check if the page has already loaded (in case of refresh)
