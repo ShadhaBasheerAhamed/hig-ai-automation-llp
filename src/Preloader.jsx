@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
-import robotAnimation from "./assets/robot-loading.json"; // Your JSON file
 
 const Preloader = () => {
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    // Fetch the animation from the public folder, just like in AboutUsPage
+    // The file is at: public/images/robot-loading.json
+    fetch("/images/robot-loading.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setAnimationData(data);
+      })
+      .catch((error) => console.error("Error loading robot animation:", error));
+  }, []);
+
+  // If the animation hasn't loaded yet, return null (or a simple white screen)
+  // This prevents the "animationData is undefined" error
+  if (!animationData) return <div className="fixed inset-0 z-50 bg-white"></div>;
+
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
       {/* Robot Animation */}
       <div className="w-64 h-64">
-        <Lottie animationData={robotAnimation} loop={true} />
+        <Lottie animationData={animationData} loop={true} />
       </div>
       
       {/* Text Animation */}
