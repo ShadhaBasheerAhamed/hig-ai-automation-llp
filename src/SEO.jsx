@@ -9,7 +9,14 @@ const SEO = ({ title, description, keywords, image, url }) => {
   const defaultKeywords = [
     // Core Identity
     "HIG AI Automation", "HIG AI", "AI Automation Company", "Web Development Tirunelveli", 
-    "Business Automation", "Artificial Intelligence India",
+    "Business Automation", "Artificial Intelligence India","hig ai automation llp tirunelveli","hig ai automation llp",
+    "AI Solutions Provider", "Custom AI Development", "Workflow Automation Services",
+    "AI Automation Services", "AI Software Development", "AI Solutions India", "AI Automation Company", 
+
+    // Services
+    "AI Solutions", "AI Agents Fine Tuning", "Website Development", "Mobile App Development",
+    "Software Development", "Business Workflow Automation (RPA)", "Billing & ERP Application Development",
+    "Lead Generation", "Digital Marketing", "All Third Party Services Tirunelveli", "Tamil Nadu AI Solutions",
 
     // AI Solutions & Systems
     "artificial intelligence solutions", "intelligent ai systems", "ai powered applications", 

@@ -36,6 +36,8 @@ import LoginPage from './LoginPage.jsx';
 import SignUpPage from './SignUpPage.jsx';
 import AdminDashboard from './AdminDashboard.jsx';
 
+import BlogPostDetail from './BlogPostDetail';
+
 const App = () => {
   const [theme, setTheme] = useState('dark');
   const [isLoading, setIsLoading] = useState(true); // State for the Loader
@@ -86,6 +88,8 @@ const App = () => {
                 <Route path="services" element={<ServicesPage />} />
                 <Route path="ourwork" element={<WorksPage />} />
                 <Route path="blog" element={<BlogPage />} />
+                
+                <Route path="/blog/:id" element={<BlogPostDetail />} /> 
                 <Route path="careers" element={<CareersPage />} />
                 <Route path="contact" element={<ContactPage />} />
                 <Route path="privacy" element={<PolicyContent />} />

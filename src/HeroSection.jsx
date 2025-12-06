@@ -46,7 +46,12 @@ const HeroSection = ({ onExploreClick }) => {
                         initial="initial" 
                         animate="animate" 
                         className="text-center max-w-2xl mt-32"
+
                     >
+                        <motion.p variants={itemVariants} className="text-sm text-slate-600 dark:text-slate-400 mt-9 md:mt-5 xl-mt-0 mb-4">
+                            Catch me if you can . . .
+                        </motion.p>
+
                         <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
                             Welcome to <span className="gradient-text">HIG AI Automation</span>
                         </motion.h1>
