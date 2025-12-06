@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext.jsx';
@@ -9,6 +10,7 @@ import Preloader from './Preloader.jsx';
 // --- Layouts and Shared Components ---
 import MainLayout from './MainLayout.jsx';
 import ScrollToTop from './ScrollToTop.jsx';
+import WhatsAppChat from './WhatsAppChat.jsx'; // <--- 1. IMPORT THIS
 
 // --- Core Pages ---
 import HomePage from './HomePage.jsx';
@@ -40,69 +42,57 @@ import BlogPostDetail from './BlogPostDetail';
 
 const App = () => {
   const [theme, setTheme] = useState('dark');
-  const [isLoading, setIsLoading] = useState(true); // State for the Loader
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Apply theme mode to <html>
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
-  // --- LOADING LOGIC ---
   useEffect(() => {
     const handleLoad = () => {
-      // We set a small timeout (e.g., 2500ms = 2.5 seconds)
-      // This ensures the Robot animation is seen before the site snaps in.
       setTimeout(() => {
         setIsLoading(false);
       }, 5000); 
     };
 
-    // Check if the page has already loaded (in case of refresh)
     if (document.readyState === "complete") {
       handleLoad();
     } else {
-      // Wait for all assets (images, scripts) to fully load
       window.addEventListener("load", handleLoad);
     }
 
-    // Cleanup listener
     return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   return (
     <>
-      {/* 1. If Loading is TRUE, show the Robot Preloader */}
       {isLoading ? (
         <Preloader />
       ) : (
-        /* 2. If Loading is FALSE, show the Main Website */
         <AuthProvider>
           <BrowserRouter>
             <ScrollToTop />
+            {/* 2. ADD THE BUTTON HERE - It will show on all pages */}
+            <WhatsAppChat /> 
+            
             <Routes>
               {/* ---------- PUBLIC ROUTES WITH MAIN LAYOUT ---------- */}
               <Route path="/" element={<MainLayout theme={theme} setTheme={setTheme} />}>
-                {/* Core Pages */}
                 <Route index element={<HomePage />} />
                 <Route path="about" element={<AboutUsPage />} />
                 <Route path="services" element={<ServicesPage />} />
                 <Route path="ourwork" element={<WorksPage />} />
                 <Route path="blog" element={<BlogPage />} />
-                
                 <Route path="/blog/:id" element={<BlogPostDetail />} /> 
                 <Route path="careers" element={<CareersPage />} />
                 <Route path="contact" element={<ContactPage />} />
                 <Route path="privacy" element={<PolicyContent />} />
-
-                {/* Informational / Policy Pages */}
                 <Route path="report-harassment" element={<HarassmentReportPage />} />
                 <Route path="fraud-awareness" element={<FraudAwarenessPage />} />
                 <Route path="policy" element={<PolicyInfoPages />} />
                 <Route path="terms-and-conditions" element={<TermsAndConditionsPage />} />
                 <Route path="child-labour-policy" element={<ChildLabourPolicyPage />} />
                 <Route path="pocso-report" element={<POCSOReportPage />} /> 
-                
-                {/* Review page */}
                 <Route path="leave-review" element={<LeaveReview />} />
               </Route>
 
