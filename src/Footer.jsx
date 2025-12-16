@@ -111,7 +111,7 @@ const Footer = () => {
                   href="mailto:contact@higaiautomation.com" 
                   className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300"
                 >
-                <FaEnvelope/> contact@higaiautomation.com
+                <FaEnvelope/> admin@higaiautomation.com
                 </a>
                 <a 
                   href="tel:+916381555777" 
